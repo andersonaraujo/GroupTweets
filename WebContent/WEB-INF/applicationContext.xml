@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+           http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+           http://www.springframework.org/schema/context
+           http://www.springframework.org/schema/context/spring-context-2.5.xsd
+           http://www.springframework.org/schema/tx 
+           http://www.springframework.org/schema/tx/spring-tx-2.5.xsd">
+	<context:annotation-config />
+	
+<!-- 
+	<tx:annotation-driven transaction-manager="txManager" />
+-->
+	
+<!-- 
+	<import resource="classpath:/ibatisDAOsContext.xml" />
+	<import resource="classpath:/timesheetServices.xml" />
+-->
+	
+<!-- 
+	<bean id="dataSource" class="org.springframework.jndi.JndiObjectFactoryBean">
+		<property name="jndiName" value="java:comp/env/jdbc/timesheetDB" />
+		<property name="resourceRef" value="true" />
+	</bean>
+-->
+	
+<!-- 
+	<bean id="txManager"
+		class="org.springframework.jdbc.datasource.DataSourceTransactionManager"
+		scope="singleton">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+-->
+
+<!-- 
+	<bean id="propertyPlaceholderConfigurer"
+		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer"
+		scope="singleton">
+		<property name="locations">
+			<list>
+				<value>classpath:/timesheetServices.properties</value>
+			</list>
+		</property>
+		<property name="ignoreUnresolvablePlaceholders">
+			<value>false</value>
+		</property>
+	</bean>
+-->
+	
+</beans>

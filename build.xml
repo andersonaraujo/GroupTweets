@@ -1,0 +1,113 @@
+<project name="groupTweets" default="help">
+
+	<property environment="env" />
+
+	<!-- Local system paths -->
+	<property name="distpath.project" value="dist" />
+	<property name="warfile" value="${distpath.project}/${ant.project.name}.war" />
+	<property name="workspace.path" value="${basedir}/.." />
+	<property name="webinf.libs" value="${workspace.path}/groupTweetsWeb/WebContent/WEB-INF/lib" />
+
+	<!-- Project settings -->
+	<property name="webapp.home" value="WebContent/WEB-INF" />
+	<!-- property name="classes.home" value="${basedir}/dist/classes" / -->
+	<property name="classes.home" value="${basedir}/WebContent/WEB-INF/classes" />
+		
+	<property name="libs.home" value="${webapp.home}/lib" />
+
+	<property file="build.properties" />
+
+	<!-- classpath -->
+	<path id="groupTweetsWeb.classpath">
+		<fileset dir="${webinf.libs}">
+			<include name="*.jar" />
+			<!--  <exclude name="testlet.jar"/>
+		      <exclude name="xerces.jar"/> -->
+		</fileset>
+
+		<fileset dir="${libs.home}">
+			<include name="*.jar" />
+			<!--  <exclude name="testlet.jar"/>
+	        <exclude name="xerces.jar"/> -->
+		</fileset>
+
+		<pathelement location="${tomcat.home}/common/lib/servlet-api.jar" />
+		<pathelement location="${tomcat.home}/common/lib/jsp-api.jar" />
+		<pathelement location="${common.libs}/catalina.jar" />
+		<pathelement location="${common.libs}/catalina-optional.jar" />
+	</path>
+
+	<!-- Check timestamp on files -->
+	<target name="prepare">
+		<tstamp />
+	</target>
+
+	<target name="build-dependencies">
+		<!-- cria os jars dependentes -->
+		<!-- <ant antfile="${workspace.path}/groupTweetsModel/build.xml" inheritAll="false" target="all" /> -->
+		<!-- <ant antfile="${workspace.path}/groupTweetsIbatisDAOs/build.xml" inheritAll="false" target="all" /> -->
+		<!-- <ant antfile="${workspace.path}/groupTweetsServices/build.xml" inheritAll="false" target="all" /> -->
+	</target>
+
+	<target name="clean-dependencies">
+		<!-- cria os jars dependentes -->
+		<!-- <ant antfile="${workspace.path}/groupTweetsModel/build.xml" inheritAll="false" target="clean" /> -->
+		<!-- <ant antfile="${workspace.path}/groupTweetsIbatisDAOs/build.xml" inheritAll="false" target="clean" /> -->
+		<!-- <ant antfile="${workspace.path}/groupTweetsServices/build.xml" inheritAll="false" target="clean" /> -->
+	</target>
+
+	<!-- Copy any resource or configuration files -->
+	<target name="resources">
+		<copy todir="${classes.home}" includeEmptyDirs="no">
+			<fileset dir="./src">
+				<patternset>
+					<include name="**/*.conf" />
+					<include name="**/*.properties" />
+					<include name="**/*.xml" />
+				</patternset>
+			</fileset>
+		</copy>
+	</target>
+
+
+	<!-- Normal build of application -->
+	<target name="compile" depends="prepare,resources,build-dependencies">
+		<javac fork="true" srcdir="src" destdir="${classes.home}" excludes="**/tests/*" debug="true">
+			<classpath refid="groupTweetsWeb.classpath" />
+		</javac>
+		<copy todir="${classes.home}">
+			<fileset dir="src" includes="MessageResources*properties" />
+		</copy>
+
+	</target>
+
+	<!-- Remove classes directory for clean build -->
+	<target name="clean" description="Prepare for clean build" depends="clean-dependencies">
+		<delete dir="${distpath.project}" />
+		<mkdir dir="${classes.home}" />
+		<mkdir dir="${distpath.project}" />
+	</target>
+
+	<!-- Build entire project -->
+	<target name="project" depends="clean,prepare,compile" />
+
+	<!-- Create binary distribution -->
+	<target name="dist" description="Create binary distribution">
+		<delete file="${warfile}" />
+		<war warfile="${warfile}" >
+			<fileset dir="${basedir}/WebContent" />
+			<exclude name=".*" />
+			<exclude name=".properties" />
+			<!-- <lib dir="${webinf.libs}" /> -->
+		</war>
+		<delete dir="${classes.home}" />
+	</target>
+
+	<!-- Build project and create distribution-->
+	<target name="all" depends="project,dist" />
+	
+	<target name="help">
+		<echo message="all:            Clears all and rebuilds the WAR file" />
+	</target>
+
+</project>
