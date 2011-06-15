@@ -44,14 +44,14 @@
 
 	<target name="build-dependencies">
 		<!-- cria os jars dependentes -->
-		<!-- <ant antfile="${workspace.path}/groupTweetsModel/build.xml" inheritAll="false" target="all" /> -->
+		<ant antfile="${workspace.path}/groupTweetsModel/build.xml" inheritAll="false" target="all" />
 		<!-- <ant antfile="${workspace.path}/groupTweetsIbatisDAOs/build.xml" inheritAll="false" target="all" /> -->
 		<!-- <ant antfile="${workspace.path}/groupTweetsServices/build.xml" inheritAll="false" target="all" /> -->
 	</target>
 
 	<target name="clean-dependencies">
 		<!-- cria os jars dependentes -->
-		<!-- <ant antfile="${workspace.path}/groupTweetsModel/build.xml" inheritAll="false" target="clean" /> -->
+		<ant antfile="${workspace.path}/groupTweetsModel/build.xml" inheritAll="false" target="clean" />
 		<!-- <ant antfile="${workspace.path}/groupTweetsIbatisDAOs/build.xml" inheritAll="false" target="clean" /> -->
 		<!-- <ant antfile="${workspace.path}/groupTweetsServices/build.xml" inheritAll="false" target="clean" /> -->
 	</target>
@@ -72,7 +72,7 @@
 
 	<!-- Normal build of application -->
 	<target name="compile" depends="prepare,resources,build-dependencies">
-		<javac fork="true" srcdir="src" destdir="${classes.home}" excludes="**/tests/*" debug="true">
+		<javac fork="true" srcdir="src" destdir="${classes.home}" excludes="**/tests/*" debug="true" >
 			<classpath refid="groupTweetsWeb.classpath" />
 		</javac>
 		<copy todir="${classes.home}">
